@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
 
-const API_KEY = "30657263908cb328da92f4be931f1e81"
-
 export default function Home() {
     const [movies, setMovies] = useState()
 
@@ -11,7 +9,7 @@ export default function Home() {
 
     const getData = async () => {
         try {
-            const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
+            const response = await fetch("/api/movies")
             const { results } = await response.json()
             setMovies(results)
         } catch (e) {
