@@ -5,7 +5,7 @@ export default function Home({ results }) {
                 const title = data.original_title
                 return (
                     <div className="movie" key={data.id}>
-                        <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} />
+                        <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
                         <h4>{title}</h4>
                     </div>
                 )
@@ -16,6 +16,9 @@ export default function Home({ results }) {
           grid-template-columns: 1fr 1fr;
           padding: 20px;
           gap: 20px;
+        }
+        .movie {
+            cursor: pointer;
         }
         .movie img {
           max-width: 100%;
