@@ -1,10 +1,22 @@
+import { useRouter } from "next/router"
+
 export default function Home({ results }) {
+    const router = useRouter()
+    const onClick = (id, title) => {
+        router.push({
+            pathname: `/movies/${id}`,
+            query: {
+                title,
+            }
+        },
+        `/movies/${id}`)
+    }
     return (
         <div className="container">
             {results?.map((data) => {
                 const title = data.original_title
                 return (
-                    <div className="movie" key={data.id}>
+                    <div className="movie" key={data.id} onClick={()=>onClick(data.id, data.original_title)}>
                         <img src={`https://image.tmdb.org/t/p/w500${data.poster_path}`} />
                         <h4>{title}</h4>
                     </div>
