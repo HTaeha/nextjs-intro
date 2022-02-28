@@ -1,26 +1,7 @@
-import { useState, useEffect } from "react"
-
-export default function Home() {
-    const [movies, setMovies] = useState()
-
-    useEffect(() => {
-        getData()
-    }, [])
-
-    const getData = async () => {
-        try {
-            const response = await fetch("/api/movies")
-            const { results } = await response.json()
-            setMovies(results)
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
+export default function Home({ results }) {
     return (
         <div className="container">
-            {!movies && <h4>Loading...</h4>}
-            {movies?.map((data) => {
+            {results?.map((data) => {
                 const title = data.original_title
                 return (
                     <div className="movie" key={data.id}>
@@ -52,4 +33,24 @@ export default function Home() {
       `}</style>
         </div>
     )
+}
+
+export const getServerSideProps = async () => {
+    try {
+        const response = await fetch("http://localhost:3000/api/movies")
+        const { results } = await response.json()
+
+        return {
+            props: {
+                results,
+            }
+        }
+    } catch (e) {
+        console.error(e)
+        return {
+            props: {
+                results: null,
+            }
+        }
+    }
 }
