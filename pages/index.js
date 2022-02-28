@@ -1,18 +1,14 @@
 import { useRouter } from "next/router"
+import Seo from "../components/Seo"
 
 export default function Home({ results }) {
     const router = useRouter()
     const onClick = (id, title) => {
-        router.push({
-            pathname: `/movies/${id}`,
-            query: {
-                title,
-            }
-        },
-        `/movies/${id}`)
+        router.push(`/movies/${title}/${id}`)
     }
     return (
         <div className="container">
+            <Seo title={"Home"} />
             {results?.map((data) => {
                 const title = data.original_title
                 return (
@@ -60,11 +56,10 @@ export const getServerSideProps = async () => {
                 results,
             }
         }
-    } catch (e) {
-        console.error(e)
+    } catch (error) {
         return {
             props: {
-                results: null,
+                error: `${error}`,
             }
         }
     }
